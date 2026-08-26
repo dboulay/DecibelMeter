@@ -19,6 +19,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import kotlin.math.log10
 import kotlin.math.sqrt
 import java.text.SimpleDateFormat
