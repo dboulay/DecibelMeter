@@ -215,14 +215,23 @@ fun DBMeterApp(onRequestPermissions: () -> Unit) {
                     "measure" -> MeasureScreen(
                         samples, min,max,sum,count,elapsed,
                         onStart={
-                            MainActivity.measuring=true
-                            ContextCompat.startForegroundService(
-                                context, Intent(context, MeasurementService::class.java)
-                            )
+                            if (ContextCompat.checkSelfPermission(
+                                    context, Manifest.permission.RECORD_AUDIO
+                                ) == PackageManager.PERMISSION_GRANTED
+                            ) {
+                                MainActivity.measuring=true
+                                ContextCompat.startForegroundService(
+                                    context, Intent(context, MeasurementService::class.java)
+                                )
+                            } else {
+                                onPermissions()
+                            }
                         },
                         onStop={
                             MainActivity.measuring=false
-                            context.stopService(Intent(context, MeasurementService::class.java))
+                            context.startService(
+                                Intent(context, MeasurementService::class.java).setAction("STOP")
+                            )
                         },
                         onPermissions=onRequestPermissions
                     )
