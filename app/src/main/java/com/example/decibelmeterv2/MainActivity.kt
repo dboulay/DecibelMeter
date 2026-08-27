@@ -224,7 +224,7 @@ fun DBMeterApp(onRequestPermissions: () -> Unit) {
                                     context, Intent(context, MeasurementService::class.java)
                                 )
                             } else {
-                                onPermissions()
+                                onRequestPermissions()
                             }
                         },
                         onStop={
